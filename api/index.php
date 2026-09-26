@@ -21,7 +21,7 @@ foreach ([
 foreach (['services.php', 'packages.php'] as $file) {
     $src = __DIR__ . '/../bootstrap/cache/' . $file;
     $dst = '/tmp/' . $file;
-    if (file_exists($src) && !file_exists($dst)) {
+    if (file_exists($src)) {
         @copy($src, $dst);
     }
 }
