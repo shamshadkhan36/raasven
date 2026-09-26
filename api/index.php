@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // Prepare writable storage directory in /tmp for Vercel's read-only filesystem
 $storagePath = '/tmp/storage';
 foreach ([
@@ -33,4 +37,11 @@ putenv("SESSION_DRIVER=array");
 $_ENV['SESSION_DRIVER'] = 'array';
 $_SERVER['SESSION_DRIVER'] = 'array';
 
-require __DIR__ . '/../public/index.php';
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    http_response_code(500);
+    echo "<h1>Fatal Exception: " . htmlspecialchars($e->getMessage()) . "</h1>";
+    echo "<p>In " . htmlspecialchars($e->getFile()) . ":" . $e->getLine() . "</p>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+}
