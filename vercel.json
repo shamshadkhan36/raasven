@@ -9,12 +9,12 @@
   },
   "routes": [
     {
-      "src": "/(images|build|css|js)/(.*)",
-      "dest": "/public/$1/$2"
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
     },
     {
-      "src": "/(.*)\\.(ico|jpg|jpeg|png|gif|svg|webp|css|js|woff|woff2|ttf|eot)$",
-      "dest": "/public/$1.$2"
+      "src": "/build/(.*)",
+      "dest": "/build/$1"
     },
     {
       "src": "/(.*)",

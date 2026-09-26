@@ -53,7 +53,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative bg-dark text-white min-h-[85vh] flex items-center bg-cover bg-center overflow-hidden" style="background-image: linear-gradient(to right, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.75) 50%, rgba(17,17,17,0.3) 100%), url('{{ asset('images/hero-banner.jpg') }}');">
+    <section class="relative bg-dark text-white min-h-[85vh] flex items-center bg-cover bg-center overflow-hidden" style="background-image: linear-gradient(to right, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.75) 50%, rgba(17,17,17,0.3) 100%), url('/images/hero-banner.jpg');">
         
         <div class="container mx-auto px-8 relative z-10 grid md:grid-cols-2 gap-12 items-center py-16">
             <div class="flex flex-col justify-center">
@@ -75,7 +75,7 @@
             </div>
             <!-- Featured hero showcase bottle visual -->
             <div class="hidden md:flex justify-end items-center">
-                <img src="{{ asset('images/hero-banner.jpg') }}" alt="Raasven Signature Perfume Collection" class="w-full max-w-lg object-cover rounded-2xl shadow-2xl border-2 border-gold/40 hover:scale-[1.02] transition duration-500">
+                <img src="/images/hero-banner.jpg" alt="Raasven Signature Perfume Collection" class="w-full max-w-lg object-cover rounded-2xl shadow-2xl border-2 border-gold/40 hover:scale-[1.02] transition duration-500">
             </div>
         </div>
     </section>
@@ -93,7 +93,7 @@
             <!-- Card 1 -->
             <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
                 <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
-                    <img src="{{ asset('images/wild-edge.jpg') }}" alt="Wild Edge" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <img src="/images/wild-edge.jpg" alt="Wild Edge" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
                 <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
                 <h4 class="text-2xl font-serif text-dark mb-1">Wild Edge</h4>
@@ -104,7 +104,7 @@
             <!-- Card 2 -->
             <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
                 <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
-                    <img src="{{ asset('images/elan.jpg') }}" alt="Élan" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <img src="/images/elan.jpg" alt="Élan" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
                 <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
                 <h4 class="text-2xl font-serif text-dark mb-1">Élan</h4>
@@ -115,7 +115,7 @@
             <!-- Card 3 -->
             <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
                 <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
-                    <img src="{{ asset('images/ruby-mist.jpg') }}" alt="Ruby Mist" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <img src="/images/ruby-mist.jpg" alt="Ruby Mist" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
                 <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
                 <h4 class="text-2xl font-serif text-dark mb-1">Ruby Mist</h4>
@@ -126,7 +126,7 @@
             <!-- Card 4 -->
             <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
                 <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
-                    <img src="{{ asset('images/oud-royale.jpg') }}" alt="Oud Royale" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <img src="/images/oud-royale.jpg" alt="Oud Royale" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
                 <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
                 <h4 class="text-2xl font-serif text-dark mb-1">Oud Royale</h4>
@@ -166,7 +166,7 @@
     <!-- Grid Sections (Export & About / Private Label) -->
     <section class="grid md:grid-cols-2">
         <!-- Export Markets -->
-        <div class="bg-dark text-white p-12 lg:p-20 relative bg-cover bg-center flex flex-col justify-between" style="background-image: linear-gradient(rgba(17,17,17,0.78), rgba(17,17,17,0.88)), url('{{ asset('images/export-markets.jpg') }}');">
+        <div class="bg-dark text-white p-12 lg:p-20 relative bg-cover bg-center flex flex-col justify-between" style="background-image: linear-gradient(rgba(17,17,17,0.78), rgba(17,17,17,0.88)), url('/images/export-markets.jpg');">
             <div>
                 <h3 class="text-3xl lg:text-4xl font-serif mb-4 leading-snug">Taking Indian Fragrances<br>to Global Markets</h3>
                 <p class="text-gray-300 text-sm mb-8 max-w-sm leading-relaxed">Kalpana Global Eximm connects premium Indian fragrances with customers and business partners across the world.</p>
@@ -214,7 +214,7 @@
 
         <!-- Private Label Visual -->
         <div class="bg-stone-100 p-8 lg:p-14 flex items-center justify-center border-t md:border-t-0 md:border-r border-gray-200 relative overflow-hidden">
-            <img src="{{ asset('images/private-label.jpg') }}" alt="Private Label Fragrance Manufacturing" class="w-full h-auto max-h-[460px] object-cover rounded-2xl shadow-xl z-10 relative">
+            <img src="/images/private-label.jpg" alt="Private Label Fragrance Manufacturing" class="w-full h-auto max-h-[460px] object-cover rounded-2xl shadow-xl z-10 relative">
         </div>
 
         <!-- Private Label Text -->
