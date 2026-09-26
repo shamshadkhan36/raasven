@@ -53,31 +53,29 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative bg-dark text-white min-h-[80vh] flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1519750157634-b6d493a0f77c?q=80&w=2070&auto=format&fit=crop');">
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <section class="relative bg-dark text-white min-h-[85vh] flex items-center bg-cover bg-center overflow-hidden" style="background-image: linear-gradient(to right, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.75) 50%, rgba(17,17,17,0.3) 100%), url('{{ asset('images/hero-banner.jpg') }}');">
         
-        <div class="container mx-auto px-8 relative z-10 grid md:grid-cols-2 gap-8">
+        <div class="container mx-auto px-8 relative z-10 grid md:grid-cols-2 gap-12 items-center py-16">
             <div class="flex flex-col justify-center">
-                <p class="text-gold text-sm font-semibold tracking-widest mb-2">RAASVEN</p>
+                <p class="text-gold text-sm font-semibold tracking-widest uppercase mb-3">RAASVEN</p>
                 <h2 class="text-5xl md:text-6xl font-serif leading-tight mb-6">The Signature<br>of Your Presence</h2>
-                <p class="text-gray-300 text-lg mb-8 max-w-md">Premium Fragrances Crafted for a Lasting Impression.</p>
+                <p class="text-gray-300 text-lg mb-8 max-w-md font-light">Premium Fragrances Crafted for a Lasting Impression.</p>
                 
                 <div class="flex flex-wrap gap-4">
-                    <a href="#" class="bg-gold hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm font-medium transition flex items-center">
-                        Explore Collection <i class="fas fa-arrow-right ml-2"></i>
+                    <a href="#collection" class="bg-gold hover:bg-yellow-700 text-white px-7 py-3 rounded-full text-sm font-medium transition flex items-center shadow-lg shadow-gold/20">
+                        Explore Collection <i class="fas fa-arrow-right ml-2 text-xs"></i>
                     </a>
-                    <a href="#" class="border border-white hover:bg-white hover:text-dark text-white px-6 py-3 rounded-full text-sm font-medium transition">
+                    <a href="#contact" class="border border-white/60 hover:bg-white hover:text-dark text-white px-7 py-3 rounded-full text-sm font-medium transition backdrop-blur-sm">
                         Become a Distributor
                     </a>
-                    <a href="#" class="bg-green hover:bg-green-600 text-white px-6 py-3 rounded-full text-sm font-medium transition flex items-center">
+                    <a href="https://wa.me/" target="_blank" class="bg-green hover:bg-green-600 text-white px-7 py-3 rounded-full text-sm font-medium transition flex items-center shadow-lg">
                         <i class="fab fa-whatsapp mr-2 text-lg"></i> WhatsApp Us
                     </a>
                 </div>
             </div>
-            <!-- Mockup image placeholder for bottles -->
-            <div class="hidden md:flex justify-end items-end">
-                <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1000&auto=format&fit=crop" alt="Perfume Bottles" class="h-96 object-cover rounded-lg shadow-2xl border-4 border-gold/30">
+            <!-- Featured hero showcase bottle visual -->
+            <div class="hidden md:flex justify-end items-center">
+                <img src="{{ asset('images/hero-banner.jpg') }}" alt="Raasven Signature Perfume Collection" class="w-full max-w-lg object-cover rounded-2xl shadow-2xl border-2 border-gold/40 hover:scale-[1.02] transition duration-500">
             </div>
         </div>
     </section>
@@ -93,48 +91,48 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
             <!-- Card 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="bg-gray-50 h-48 rounded flex items-center justify-center mb-4 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=500&auto=format&fit=crop" alt="Wild Edge" class="object-cover h-full w-full">
+            <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
+                    <img src="{{ asset('images/wild-edge.jpg') }}" alt="Wild Edge" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
-                <p class="text-gold text-xs font-semibold tracking-widest mb-1">RAASVEN</p>
-                <h4 class="text-xl font-serif mb-1">Wild Edge</h4>
-                <p class="text-xs text-gray-400 mb-3">Fresh | Woody</p>
-                <p class="text-sm text-gray-600 mb-4 h-10">A bold and energetic fragrance for the modern man.</p>
-                <a href="#" class="text-gold text-sm font-medium flex items-center hover:underline">Explore <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
+                <h4 class="text-2xl font-serif text-dark mb-1">Wild Edge</h4>
+                <p class="text-xs text-gray-400 font-medium mb-3">Fresh | Woody</p>
+                <p class="text-sm text-gray-600 mb-5 leading-relaxed">A bold and energetic fragrance for the modern man.</p>
+                <a href="#contact" class="text-gold text-sm font-semibold inline-flex items-center group-hover:translate-x-1 transition duration-200">Explore <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
             </div>
             <!-- Card 2 -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="bg-gray-50 h-48 rounded flex items-center justify-center mb-4 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=500&auto=format&fit=crop" alt="Elan" class="object-cover h-full w-full">
+            <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
+                    <img src="{{ asset('images/elan.jpg') }}" alt="Élan" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
-                <p class="text-gold text-xs font-semibold tracking-widest mb-1">RAASVEN</p>
-                <h4 class="text-xl font-serif mb-1">Élan</h4>
-                <p class="text-xs text-gray-400 mb-3">Floral | Woody</p>
-                <p class="text-sm text-gray-600 mb-4 h-10">Elegant, sophisticated and timeless.</p>
-                <a href="#" class="text-gold text-sm font-medium flex items-center hover:underline">Explore <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
+                <h4 class="text-2xl font-serif text-dark mb-1">Élan</h4>
+                <p class="text-xs text-gray-400 font-medium mb-3">Floral | Woody</p>
+                <p class="text-sm text-gray-600 mb-5 leading-relaxed">Elegant, sophisticated and timeless.</p>
+                <a href="#contact" class="text-gold text-sm font-semibold inline-flex items-center group-hover:translate-x-1 transition duration-200">Explore <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
             </div>
             <!-- Card 3 -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="bg-gray-50 h-48 rounded flex items-center justify-center mb-4 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=500&auto=format&fit=crop" alt="Ruby Mist" class="object-cover h-full w-full">
+            <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
+                    <img src="{{ asset('images/ruby-mist.jpg') }}" alt="Ruby Mist" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
-                <p class="text-gold text-xs font-semibold tracking-widest mb-1">RAASVEN</p>
-                <h4 class="text-xl font-serif mb-1">Ruby Mist</h4>
-                <p class="text-xs text-gray-400 mb-3">Floral | Fruity</p>
-                <p class="text-sm text-gray-600 mb-4 h-10">A graceful blend of femininity and charm.</p>
-                <a href="#" class="text-gold text-sm font-medium flex items-center hover:underline">Explore <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
+                <h4 class="text-2xl font-serif text-dark mb-1">Ruby Mist</h4>
+                <p class="text-xs text-gray-400 font-medium mb-3">Floral | Fruity</p>
+                <p class="text-sm text-gray-600 mb-5 leading-relaxed">A graceful blend of femininity and charm.</p>
+                <a href="#contact" class="text-gold text-sm font-semibold inline-flex items-center group-hover:translate-x-1 transition duration-200">Explore <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
             </div>
             <!-- Card 4 -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="bg-gray-50 h-48 rounded flex items-center justify-center mb-4 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1582211594533-268f4f1edcb9?q=80&w=500&auto=format&fit=crop" alt="Oud Royale" class="object-cover h-full w-full">
+            <div class="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="bg-stone-50 h-64 rounded-xl flex items-center justify-center mb-5 relative overflow-hidden">
+                    <img src="{{ asset('images/oud-royale.jpg') }}" alt="Oud Royale" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                 </div>
-                <p class="text-gold text-xs font-semibold tracking-widest mb-1">RAASVEN</p>
-                <h4 class="text-xl font-serif mb-1">Oud Royale</h4>
-                <p class="text-xs text-gray-400 mb-3">Woody | Amber</p>
-                <p class="text-sm text-gray-600 mb-4 h-10">Rich, intense and unforgettable.</p>
-                <a href="#" class="text-gold text-sm font-medium flex items-center hover:underline">Explore <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">RAASVEN</p>
+                <h4 class="text-2xl font-serif text-dark mb-1">Oud Royale</h4>
+                <p class="text-xs text-gray-400 font-medium mb-3">Woody | Amber</p>
+                <p class="text-sm text-gray-600 mb-5 leading-relaxed">Rich, intense and unforgettable.</p>
+                <a href="#contact" class="text-gold text-sm font-semibold inline-flex items-center group-hover:translate-x-1 transition duration-200">Explore <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
             </div>
         </div>
     </section>
@@ -168,55 +166,55 @@
     <!-- Grid Sections (Export & About / Private Label) -->
     <section class="grid md:grid-cols-2">
         <!-- Export Markets -->
-        <div class="bg-dark text-white p-12 lg:p-20 relative bg-cover bg-center" style="background-image: linear-gradient(rgba(26,26,26,0.8), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1494412519320-aa313fc17d01?q=80&w=2070&auto=format&fit=crop');">
-            <h3 class="text-3xl font-serif mb-4">Taking Indian Fragrances<br>to Global Markets</h3>
-            <p class="text-gray-300 text-sm mb-8 max-w-sm">Kalpana Global Eximm connects premium Indian fragrances with customers and business partners across the world.</p>
-            <a href="#" class="inline-block bg-gold hover:bg-yellow-700 text-white px-6 py-3 rounded text-sm font-medium transition mb-12">
-                Explore Export Markets <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+        <div class="bg-dark text-white p-12 lg:p-20 relative bg-cover bg-center flex flex-col justify-between" style="background-image: linear-gradient(rgba(17,17,17,0.78), rgba(17,17,17,0.88)), url('{{ asset('images/export-markets.jpg') }}');">
+            <div>
+                <h3 class="text-3xl lg:text-4xl font-serif mb-4 leading-snug">Taking Indian Fragrances<br>to Global Markets</h3>
+                <p class="text-gray-300 text-sm mb-8 max-w-sm leading-relaxed">Kalpana Global Eximm connects premium Indian fragrances with customers and business partners across the world.</p>
+                <a href="#contact" class="inline-block bg-gold hover:bg-yellow-700 text-white px-7 py-3 rounded-full text-sm font-medium transition mb-12 shadow-lg shadow-gold/20">
+                    Explore Export Markets <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                </a>
+            </div>
             
-            <div class="flex space-x-6 text-xs text-center border-t border-gray-700 pt-6">
-                <div><div class="w-6 h-6 rounded-full bg-gray-400 mx-auto mb-1 flex items-center justify-center text-[10px]">🇦🇪</div> UAE</div>
-                <div><div class="w-6 h-6 rounded-full bg-gray-400 mx-auto mb-1 flex items-center justify-center text-[10px]">🇸🇦</div> Saudi Arabia</div>
-                <div><div class="w-6 h-6 rounded-full bg-gray-400 mx-auto mb-1 flex items-center justify-center text-[10px]">🇴🇲</div> Oman</div>
-                <div><div class="w-6 h-6 rounded-full bg-gray-400 mx-auto mb-1 flex items-center justify-center text-[10px]">🌍</div> Africa</div>
-                <div><div class="w-6 h-6 rounded-full bg-gray-700 mx-auto mb-1 flex items-center justify-center text-white"><i class="fas fa-plus"></i></div> & More</div>
+            <div class="grid grid-cols-5 gap-2 text-xs text-center border-t border-gray-700/80 pt-6">
+                <div><div class="w-8 h-8 rounded-full bg-white/10 mx-auto mb-2 flex items-center justify-center text-sm">🇦🇪</div> UAE</div>
+                <div><div class="w-8 h-8 rounded-full bg-white/10 mx-auto mb-2 flex items-center justify-center text-sm">🇸🇦</div> Saudi Arabia</div>
+                <div><div class="w-8 h-8 rounded-full bg-white/10 mx-auto mb-2 flex items-center justify-center text-sm">🇴🇲</div> Oman</div>
+                <div><div class="w-8 h-8 rounded-full bg-white/10 mx-auto mb-2 flex items-center justify-center text-sm">🌍</div> Africa</div>
+                <div><div class="w-8 h-8 rounded-full bg-gold/30 text-gold mx-auto mb-2 flex items-center justify-center text-xs font-bold"><i class="fas fa-plus"></i></div> & More</div>
             </div>
         </div>
         
         <!-- About Us -->
         <div class="bg-offwhite p-12 lg:p-20 flex flex-col justify-center border-b md:border-b-0 border-gray-200">
-            <p class="text-gold text-xs font-semibold tracking-widest mb-2 flex items-center"><span class="w-6 h-px bg-gold inline-block mr-2"></span> About Us</p>
-            <h3 class="text-3xl font-serif text-dark mb-6">Kalpana Global Eximm</h3>
+            <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-2 flex items-center"><span class="w-6 h-px bg-gold inline-block mr-2"></span> About Us</p>
+            <h3 class="text-3xl lg:text-4xl font-serif text-dark mb-6">Kalpana Global Eximm</h3>
             <p class="text-gray-600 text-sm mb-8 leading-relaxed">
                 Kalpana Global Eximm is an India-based import-export and merchant trading company focused on premium fragrances and selected lifestyle products. We aim to connect quality Indian products with customers and business partners across global markets.
             </p>
-            <div class="flex space-x-8 mb-8 border-t border-gray-200 pt-6">
+            <div class="grid grid-cols-3 gap-4 mb-8 border-t border-gray-200 pt-6 text-center md:text-left">
                 <div>
-                    <h6 class="font-medium text-dark text-sm">Quality</h6>
+                    <h6 class="font-semibold text-dark text-base">Quality</h6>
                     <p class="text-xs text-gray-500">Products</p>
                 </div>
                 <div>
-                    <h6 class="font-medium text-dark text-sm">Global</h6>
+                    <h6 class="font-semibold text-dark text-base">Global</h6>
                     <p class="text-xs text-gray-500">Partnerships</p>
                 </div>
                 <div>
-                    <h6 class="font-medium text-dark text-sm">Trusted</h6>
+                    <h6 class="font-semibold text-dark text-base">Trusted</h6>
                     <p class="text-xs text-gray-500">Trading Partner</p>
                 </div>
             </div>
             <div>
-                <a href="#" class="inline-block border border-gold text-gold hover:bg-gold hover:text-white px-6 py-2 rounded-full text-sm font-medium transition">
+                <a href="#contact" class="inline-block border border-gold text-gold hover:bg-gold hover:text-white px-7 py-2.5 rounded-full text-sm font-medium transition">
                     Know More <i class="fas fa-arrow-right ml-2 text-xs"></i>
                 </a>
             </div>
         </div>
 
-        <!-- Private Label Visual (Placeholder image area) -->
-        <div class="bg-white p-12 lg:p-20 flex items-center justify-center border-t md:border-t-0 md:border-r border-gray-200 relative overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=800&auto=format&fit=crop" alt="Private Label Boxes" class="max-w-full h-auto rounded shadow-lg z-10 relative">
-            <!-- Decorative background elements -->
-            <div class="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik00MCAwbDRwIDE2bDE2IDQtMTYgNGwtNCAxNmwtNC0xNmwtMTYtNGwxNi00eiIvPjwvc3ZnPg==')]"></div>
+        <!-- Private Label Visual -->
+        <div class="bg-stone-100 p-8 lg:p-14 flex items-center justify-center border-t md:border-t-0 md:border-r border-gray-200 relative overflow-hidden">
+            <img src="{{ asset('images/private-label.jpg') }}" alt="Private Label Fragrance Manufacturing" class="w-full h-auto max-h-[460px] object-cover rounded-2xl shadow-xl z-10 relative">
         </div>
 
         <!-- Private Label Text -->
