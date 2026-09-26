@@ -29,8 +29,8 @@ putenv("CACHE_STORE=array");
 $_ENV['CACHE_STORE'] = 'array';
 $_SERVER['CACHE_STORE'] = 'array';
 
-putenv("SESSION_DRIVER=cookie");
-$_ENV['SESSION_DRIVER'] = 'cookie';
-$_SERVER['SESSION_DRIVER'] = 'cookie';
+putenv("SESSION_DRIVER=array");
+$_ENV['SESSION_DRIVER'] = 'array';
+$_SERVER['SESSION_DRIVER'] = 'array';
 
 require __DIR__ . '/../public/index.php';
