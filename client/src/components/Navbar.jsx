@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { ShoppingBag, Heart, Search, Menu, X, Sparkles, MessageCircle, Shield } from 'lucide-react';
+import { ShoppingBag, Heart, Search, Menu, X, Sparkles, MessageCircle } from 'lucide-react';
 
 export const Navbar = ({ onSearchClick }) => {
   const { 
@@ -11,9 +11,7 @@ export const Navbar = ({ onSearchClick }) => {
     currency, 
     setCurrency, 
     currencies, 
-    siteSettings,
-    setIsAdminOpen,
-    isAdminLoggedIn
+    siteSettings
   } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -138,20 +136,6 @@ export const Navbar = ({ onSearchClick }) => {
             <span>WhatsApp Us</span>
           </a>
 
-          {/* Admin Portal Button */}
-          <button
-            onClick={() => setIsAdminOpen(true)}
-            className={`p-1.5 sm:p-2 rounded-full border transition flex items-center space-x-1 ${
-              isAdminLoggedIn 
-                ? 'bg-[#0F3B2E] text-[#E6CA65] border-[#D4AF37]' 
-                : 'text-stone-600 hover:text-[#0F3B2E] border-[#E8DFC9] hover:bg-[#FAF5E9]'
-            }`}
-            title="Admin Dashboard & Control Center"
-          >
-            <Shield className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-            <span className="hidden xl:inline text-[11px] font-bold">{isAdminLoggedIn ? 'Active' : 'Admin'}</span>
-          </button>
-
           {/* Cart / Shopping Bag Button */}
           <button 
             onClick={() => setIsCartOpen(true)}
@@ -234,16 +218,6 @@ export const Navbar = ({ onSearchClick }) => {
             >
               <span>Private Wishlist</span>
               <span className="text-xs font-bold text-[#C5A059]">({wishlist.length} saved)</span>
-            </button>
-            <button 
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setIsAdminOpen(true);
-              }}
-              className="py-2 text-left font-bold text-[#0F3B2E] flex items-center space-x-2 border-t border-[#F0E8D7] pt-2.5"
-            >
-              <Shield className="w-4 h-4 text-[#C5A059]" />
-              <span>Admin Control Panel {isAdminLoggedIn && '• Active'}</span>
             </button>
           </div>
 

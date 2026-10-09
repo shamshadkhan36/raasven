@@ -9,6 +9,7 @@ export const AdminDashboard = () => {
   const {
     isAdminOpen,
     setIsAdminOpen,
+    closeAdmin,
     isAdminLoggedIn,
     setIsAdminLoggedIn,
     products,
@@ -99,13 +100,14 @@ export const AdminDashboard = () => {
       setLoginError('');
       showToast('Welcome back, Administrator!');
     } else {
-      setLoginError('Invalid username or password. (Hint: admin / raasven@admin2026)');
+      setLoginError('Invalid username or password.');
     }
   };
 
   const handleLogout = () => {
     setIsAdminLoggedIn(false);
     showToast('Logged out from admin panel', 'info');
+    closeAdmin();
   };
 
   // Open Edit Product
@@ -244,7 +246,7 @@ export const AdminDashboard = () => {
               </button>
             )}
             <button
-              onClick={() => setIsAdminOpen(false)}
+              onClick={closeAdmin}
               className="p-1.5 rounded-full text-stone-500 hover:text-stone-800 hover:bg-[#F2EDE2] transition"
               title="Close Admin Panel"
             >
@@ -303,19 +305,6 @@ export const AdminDashboard = () => {
                   className="w-full py-3 rounded-full bg-[#0F3B2E] hover:bg-[#144d3c] text-white font-bold text-xs uppercase tracking-wider shadow-md transition"
                 >
                   Unlock Admin Console
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUsername('admin');
-                    setPassword('raasven@admin2026');
-                    setIsAdminLoggedIn(true);
-                    showToast('Logged in as Administrator!');
-                  }}
-                  className="w-full py-2.5 rounded-full bg-[#FAF5E9] hover:bg-[#F2E8D2] text-[#8C6B28] font-bold text-xs border border-[#C5A059]/40 transition"
-                >
-                  ✨ One-Click Quick Login (admin)
                 </button>
               </form>
             </div>
@@ -394,7 +383,7 @@ export const AdminDashboard = () => {
                         <span>Add New Perfume</span>
                       </button>
                       <button
-                        onClick={() => setIsAdminOpen(false)}
+                        onClick={closeAdmin}
                         className="px-5 py-2.5 rounded-full bg-white border border-[#C5A059] text-[#0F3B2E] text-xs font-bold hover:bg-[#FAF5E9] transition"
                       >
                         View Live Store

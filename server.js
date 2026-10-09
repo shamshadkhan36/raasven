@@ -510,6 +510,9 @@ const distDir = fs.existsSync(path.join(__dirname, 'client', 'dist'))
 
 if (distDir) {
   app.use(express.static(distDir));
+  app.get('/admin', (req, res) => {
+    res.sendFile(path.join(distDir, 'index.html'));
+  });
   app.use((req, res) => {
     res.sendFile(path.join(distDir, 'index.html'));
   });

@@ -36,11 +36,59 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Admin Session
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  // Admin Session & Route-Based Access (/admin or #admin)
+  const [isAdminOpen, setIsAdminOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      return path === '/admin' || path === '/admin/' || hash === '#admin';
+    }
+    return false;
+  });
+
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
     return localStorage.getItem('raasven_admin_logged_in') === 'true';
   });
+
+  // Listen for direct URL access to /admin or back/forward navigation
+  useEffect(() => {
+    const handleRouteCheck = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/admin' || path === '/admin/' || hash === '#admin') {
+        setIsAdminOpen(true);
+      } else {
+        setIsAdminOpen(false);
+      }
+    };
+
+    window.addEventListener('popstate', handleRouteCheck);
+    window.addEventListener('hashchange', handleRouteCheck);
+    return () => {
+      window.removeEventListener('popstate', handleRouteCheck);
+      window.removeEventListener('hashchange', handleRouteCheck);
+    };
+  }, []);
+
+  const openAdmin = () => {
+    setIsAdminOpen(true);
+    if (typeof window !== 'undefined' && window.location.pathname.toLowerCase() !== '/admin') {
+      window.history.pushState(null, '', '/admin');
+    }
+  };
+
+  const closeAdmin = () => {
+    setIsAdminOpen(false);
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/admin' || path === '/admin/') {
+        window.history.pushState(null, '', '/');
+      } else if (hash === '#admin') {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    }
+  };
 
   // LocalStorage initialization
   const [cart, setCart] = useState(() => {
@@ -345,6 +393,8 @@ export const CartProvider = ({ children }) => {
       deleteProduct,
       isAdminOpen,
       setIsAdminOpen,
+      openAdmin,
+      closeAdmin,
       isAdminLoggedIn,
       setIsAdminLoggedIn,
       cart,

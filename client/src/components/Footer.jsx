@@ -1,9 +1,9 @@
 import React from 'react';
-import { MessageCircle, Mail, Globe, ShieldCheck, Lock } from 'lucide-react';
+import { MessageCircle, Mail, Globe, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 export const Footer = () => {
-  const { siteSettings, setIsAdminOpen, isAdminLoggedIn } = useCart();
+  const { siteSettings } = useCart();
   const phone = (siteSettings?.supportPhone || '+91 98765 43210');
   const cleanPhone = phone.replace(/[^0-9]/g, '');
   const email = siteSettings?.supportEmail || 'export@kalpanaglobaleximm.com';
@@ -124,19 +124,9 @@ export const Footer = () => {
             &copy; {new Date().getFullYear()} RAASVEN. A Registered Brand by Kalpana Global Eximm. All Rights Reserved.
           </p>
 
-          <div className="flex items-center space-x-4">
-            <button 
-              onClick={() => setIsAdminOpen(true)}
-              className="text-[#0F3B2E] font-bold hover:text-[#C5A059] flex items-center space-x-1 transition"
-            >
-              <Lock className="w-3 h-3 text-[#C5A059]" />
-              <span>{isAdminLoggedIn ? 'Admin Panel (Active)' : 'Admin Portal'}</span>
-            </button>
-            <span>•</span>
-            <span className="flex items-center space-x-1 text-emerald-800 font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>SSL Secured Checkout</span>
-            </span>
+          <div className="flex items-center space-x-2 text-stone-600 font-medium">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
+            <span>SSL Secured Checkout • Direct WhatsApp Concierge</span>
           </div>
         </div>
 
