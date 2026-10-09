@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { ShoppingBag, Heart, Search, Menu, X, Sparkles, MessageCircle, ChevronDown } from 'lucide-react';
+import { ShoppingBag, Heart, Search, Menu, X, Sparkles, MessageCircle, Shield } from 'lucide-react';
 
 export const Navbar = ({ onSearchClick }) => {
-  const { totalCount, wishlist, setIsCartOpen, setIsWishlistOpen, currency, setCurrency, currencies } = useCart();
+  const { 
+    totalCount, 
+    wishlist, 
+    setIsCartOpen, 
+    setIsWishlistOpen, 
+    currency, 
+    setCurrency, 
+    currencies, 
+    siteSettings,
+    setIsAdminOpen,
+    isAdminLoggedIn
+  } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -17,7 +28,7 @@ export const Navbar = ({ onSearchClick }) => {
         
         <div className="mx-auto flex items-center space-x-2">
           <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>Complimentary 10ml Discovery Sample on orders over ₹1,999 • Code: <strong className="text-[#E6CA65] tracking-wider">RAASVEN10</strong></span>
+          <span>{siteSettings?.announcementText || 'Complimentary 10ml Discovery Sample on orders over ₹1,999 • Code: RAASVEN10'}</span>
         </div>
 
         <div className="hidden md:flex items-center space-x-4 pr-4">
@@ -58,7 +69,7 @@ export const Navbar = ({ onSearchClick }) => {
               <span className="text-2xl sm:text-3xl font-serif font-bold tracking-[0.22em] text-[#0F3B2E] group-hover:text-[#185342] transition">
                 RAASVEN
               </span>
-              <span className="block text-[9px] uppercase tracking-[0.28em] text-[#8C764D] -mt-1 font-medium">
+              <span className="block text-[9px] uppercase tracking-[0.28em] text-[#8C6B28] -mt-1 font-medium">
                 Haute Parfumerie
               </span>
             </div>
@@ -82,13 +93,10 @@ export const Navbar = ({ onSearchClick }) => {
           <a href="#about" className="hover:text-[#0F3B2E] hover:border-b-2 hover:border-[#C5A059] pb-1 transition">
             About Us
           </a>
-          <a href="#reviews" className="hover:text-[#0F3B2E] hover:border-b-2 hover:border-[#C5A059] pb-1 transition">
-            Reviews
-          </a>
         </nav>
 
-        {/* Actions (Search, Wishlist, WhatsApp, Bag) */}
-        <div className="flex items-center space-x-2.5 sm:space-x-4">
+        {/* Actions (Search, Wishlist, WhatsApp, Admin, Bag) */}
+        <div className="flex items-center space-x-2.5 sm:space-x-3.5">
           {/* Search Trigger */}
           <button 
             onClick={onSearchClick}
@@ -114,7 +122,7 @@ export const Navbar = ({ onSearchClick }) => {
 
           {/* WhatsApp Direct Order Button */}
           <a 
-            href="https://wa.me/919876543210?text=Hello%20Raasven,%20I%20would%20like%20to%20inquire%20about%20your%20luxury%20perfume%20collection." 
+            href={`https://wa.me/${(siteSettings?.supportPhone || '919876543210').replace(/[^0-9]/g, '')}?text=Hello%20Raasven,%20I%20would%20like%20to%20inquire%20about%20your%20luxury%20perfume%20collection.`}
             target="_blank" 
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#EBF5EF] hover:bg-[#DDF0E4] text-[#125A41] text-xs font-semibold border border-[#BCE1CB] transition"
@@ -123,6 +131,20 @@ export const Navbar = ({ onSearchClick }) => {
             <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
             <span>WhatsApp Us</span>
           </a>
+
+          {/* Admin Control Portal Button */}
+          <button
+            onClick={() => setIsAdminOpen(true)}
+            className={`p-2 rounded-full border transition flex items-center space-x-1 text-xs font-bold ${
+              isAdminLoggedIn 
+                ? 'bg-[#0F3B2E] text-[#E6CA65] border-[#D4AF37]' 
+                : 'text-stone-600 hover:text-[#0F3B2E] border-[#E8DFC9] hover:bg-[#FAF5E9]'
+            }`}
+            title="Admin Dashboard & Storefront Control"
+          >
+            <Shield className="w-4 h-4" />
+            <span className="hidden md:inline text-[11px]">{isAdminLoggedIn ? 'Admin Active' : 'Admin'}</span>
+          </button>
 
           {/* Cart / Shopping Bag Button */}
           <button 
@@ -194,24 +216,27 @@ export const Navbar = ({ onSearchClick }) => {
             >
               About Kalpana Global Eximm
             </a>
-            <a 
-              href="#reviews" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 hover:text-[#0F3B2E]"
+            <button 
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsAdminOpen(true);
+              }}
+              className="py-2 text-left font-bold text-[#0F3B2E] flex items-center space-x-2 border-t border-[#F0E8D7] pt-3"
             >
-              Customer Reviews
-            </a>
+              <Shield className="w-4 h-4 text-[#C5A059]" />
+              <span>Admin Control Panel</span>
+            </button>
           </div>
 
           <div className="pt-3 border-t border-[#F0E8D7]">
             <a 
-              href="https://wa.me/919876543210" 
+              href={`https://wa.me/${(siteSettings?.supportPhone || '919876543210').replace(/[^0-9]/g, '')}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full py-2.5 px-4 rounded-xl bg-[#EBF5EF] text-[#125A41] text-xs font-semibold border border-[#BCE1CB] flex items-center justify-center space-x-2"
             >
               <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
-              <span>Direct WhatsApp Inquiry: +91 98765 43210</span>
+              <span>Direct WhatsApp Inquiry: {siteSettings?.supportPhone || '+91 98765 43210'}</span>
             </a>
           </div>
         </div>

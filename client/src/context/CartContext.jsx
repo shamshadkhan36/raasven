@@ -1,9 +1,47 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { currencies } from '../data/products';
+import { initialProducts as defaultProducts, currencies } from '../data/products';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  // Products dynamic catalog
+  const [products, setProducts] = useState(() => {
+    try {
+      const saved = localStorage.getItem('raasven_custom_products');
+      return saved ? JSON.parse(saved) : defaultProducts;
+    } catch {
+      return defaultProducts;
+    }
+  });
+
+  // Site Settings
+  const [siteSettings, setSiteSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('raasven_site_settings');
+      return saved ? JSON.parse(saved) : {
+        announcementText: 'Complimentary 10ml Discovery Sample on orders over ₹1,999 • Code: RAASVEN10',
+        supportPhone: '+91 98765 43210',
+        supportEmail: 'export@kalpanaglobaleximm.com',
+        heroTitle: 'The Signature of Your Presence.',
+        heroSubtitle: 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'
+      };
+    } catch {
+      return {
+        announcementText: 'Complimentary 10ml Discovery Sample on orders over ₹1,999 • Code: RAASVEN10',
+        supportPhone: '+91 98765 43210',
+        supportEmail: 'export@kalpanaglobaleximm.com',
+        heroTitle: 'The Signature of Your Presence.',
+        heroSubtitle: 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'
+      };
+    }
+  });
+
+  // Admin Session
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return localStorage.getItem('raasven_admin_logged_in') === 'true';
+  });
+
   // LocalStorage initialization
   const [cart, setCart] = useState(() => {
     try {
@@ -35,7 +73,30 @@ export const CartProvider = ({ children }) => {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [toasts, setToasts] = useState([]);
 
-  // Persist cart & wishlist
+  // Fetch initial products and settings from API if available
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.products?.length) {
+          setProducts(data.products);
+          localStorage.setItem('raasven_custom_products', JSON.stringify(data.products));
+        }
+      })
+      .catch(() => {});
+
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.settings) {
+          setSiteSettings(data.settings);
+          localStorage.setItem('raasven_site_settings', JSON.stringify(data.settings));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Persist cart, wishlist, products, and settings
   useEffect(() => {
     localStorage.setItem('raasven_cart', JSON.stringify(cart));
   }, [cart]);
@@ -43,6 +104,18 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('raasven_wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
+
+  useEffect(() => {
+    localStorage.setItem('raasven_custom_products', JSON.stringify(products));
+  }, [products]);
+
+  useEffect(() => {
+    localStorage.setItem('raasven_site_settings', JSON.stringify(siteSettings));
+  }, [siteSettings]);
+
+  useEffect(() => {
+    localStorage.setItem('raasven_admin_logged_in', isAdminLoggedIn ? 'true' : 'false');
+  }, [isAdminLoggedIn]);
 
   // Toast notifier
   const showToast = (message, type = 'success') => {
@@ -58,6 +131,86 @@ export const CartProvider = ({ children }) => {
     const curr = currencies[currency] || currencies.INR;
     const converted = Math.round(inrAmount * curr.rate);
     return `${curr.symbol}${converted.toLocaleString()}`;
+  };
+
+  // Admin CRUD operations
+  const addProduct = async (newProduct) => {
+    try {
+      const res = await fetch('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProduct)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setProducts(data.products);
+        showToast(`Added ${newProduct.name} to the store catalog!`);
+        return true;
+      }
+    } catch {}
+    // Fallback local update
+    const productWithId = {
+      ...newProduct,
+      id: newProduct.id || newProduct.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    };
+    setProducts(prev => [productWithId, ...prev]);
+    showToast(`Added ${newProduct.name} to the store catalog!`);
+    return true;
+  };
+
+  const updateProduct = async (id, updatedProduct) => {
+    try {
+      const res = await fetch(`/api/admin/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedProduct)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setProducts(data.products);
+        showToast(`Updated ${updatedProduct.name}!`);
+        return true;
+      }
+    } catch {}
+    // Fallback local update
+    setProducts(prev => prev.map(p => p.id === id ? { ...p, ...updatedProduct } : p));
+    showToast(`Updated ${updatedProduct.name}!`);
+    return true;
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setProducts(data.products);
+        showToast('Product removed from catalog', 'info');
+        return true;
+      }
+    } catch {}
+    // Fallback local update
+    setProducts(prev => prev.filter(p => p.id !== id));
+    showToast('Product removed from catalog', 'info');
+    return true;
+  };
+
+  const updateSettings = async (newSettings) => {
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSettings)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSiteSettings(data.settings);
+        showToast('Site settings updated successfully!');
+        return true;
+      }
+    } catch {}
+    setSiteSettings(prev => ({ ...prev, ...newSettings }));
+    showToast('Site settings updated!');
+    return true;
   };
 
   // Add to Cart
@@ -127,12 +280,10 @@ export const CartProvider = ({ children }) => {
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
-  // Free shipping threshold ₹1,999
   const freeShippingThreshold = 1999;
   const progressToFreeShipping = Math.min(100, Math.round((subtotal / freeShippingThreshold) * 100));
   const amountNeededForFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
 
-  // Discount Calculation
   let discount = 0;
   if (coupon) {
     discount = coupon.discountAmount || 0;
@@ -162,7 +313,6 @@ export const CartProvider = ({ children }) => {
         return { success: false, message: data.message };
       }
     } catch {
-      // Offline fallback
       if (clean === 'RAASVEN10') {
         const discountAmount = Math.round(subtotal * 0.1);
         setCoupon({ code: 'RAASVEN10', discountAmount, description: '10% Off Entire Order' });
@@ -186,6 +336,17 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider value={{
+      products,
+      setProducts,
+      siteSettings,
+      updateSettings,
+      addProduct,
+      updateProduct,
+      deleteProduct,
+      isAdminOpen,
+      setIsAdminOpen,
+      isAdminLoggedIn,
+      setIsAdminLoggedIn,
       cart,
       wishlist,
       currency,

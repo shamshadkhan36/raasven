@@ -72,11 +72,9 @@ export const QuickViewModal = () => {
                 <span className="text-xs uppercase font-bold tracking-widest text-[#8C6B28]">
                   {product.category}
                 </span>
-                <div className="flex items-center space-x-1 text-stone-700 font-bold text-xs">
-                  <Star className="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]" />
-                  <span>{product.rating}</span>
-                  <span className="text-stone-400 font-normal">({product.reviewCount} reviews)</span>
-                </div>
+                <span className="text-[11px] font-bold text-[#0F3B2E] bg-[#EBF3EE] px-2.5 py-0.5 rounded-full border border-[#C5A059]/30">
+                  {product.concentration || 'Pure Extrait'}
+                </span>
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F3B2E] mb-2 leading-tight">

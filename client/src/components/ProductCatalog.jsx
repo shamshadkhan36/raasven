@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { ProductCard } from './ProductCard';
-import { initialProducts } from '../data/products';
+import { useCart } from '../context/CartContext';
 import { Search, SlidersHorizontal, Sparkles, Filter, X } from 'lucide-react';
 
 export const ProductCatalog = ({ searchInputRef }) => {
+  const { products } = useCart();
   const [selectedFamily, setSelectedFamily] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
@@ -18,7 +19,7 @@ export const ProductCatalog = ({ searchInputRef }) => {
 
   // Filtering & Sorting
   const filteredProducts = useMemo(() => {
-    let result = [...initialProducts];
+    let result = [...(products || [])];
 
     if (selectedFamily !== 'All') {
       result = result.filter(p => p.family === selectedFamily);
@@ -126,7 +127,6 @@ export const ProductCatalog = ({ searchInputRef }) => {
                   <option value="featured">Sort: Featured</option>
                   <option value="price-low">Price: Low to High</option>
                   <option value="price-high">Price: High to Low</option>
-                  <option value="rating">Highest Rated</option>
                 </select>
               </div>
 

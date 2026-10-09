@@ -1,7 +1,13 @@
 import React from 'react';
-import { MessageCircle, Mail, MapPin, Globe, ShieldCheck } from 'lucide-react';
+import { MessageCircle, Mail, Globe, ShieldCheck, Lock } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 export const Footer = () => {
+  const { siteSettings, setIsAdminOpen, isAdminLoggedIn } = useCart();
+  const phone = (siteSettings?.supportPhone || '+91 98765 43210');
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const email = siteSettings?.supportEmail || 'export@kalpanaglobaleximm.com';
+
   return (
     <footer id="about" className="bg-[#FAF7F0] text-stone-700 text-xs border-t-2 border-[#C5A059]/40 pt-16 pb-12">
       <div className="container mx-auto px-4 lg:px-8">
@@ -63,7 +69,7 @@ export const Footer = () => {
               <li><a href="#private-label" className="hover:text-[#0F3B2E] transition">Private Label Flacons</a></li>
               <li><a href="#export" className="hover:text-[#0F3B2E] transition">Global Export Divisions</a></li>
               <li><a href="#private-label" className="hover:text-[#0F3B2E] transition">Turnkey Formulation</a></li>
-              <li><a href="#reviews" className="hover:text-[#0F3B2E] transition">Verified Buyer Reviews</a></li>
+              <li><a href="#features" className="hover:text-[#0F3B2E] transition">Artisanal Olfactory Notes</a></li>
               <li><a href="#about" className="hover:text-[#0F3B2E] transition">About Kalpana Global Eximm</a></li>
             </ul>
           </div>
@@ -76,11 +82,15 @@ export const Footer = () => {
             <ul className="space-y-3 text-stone-600">
               <li className="flex items-start space-x-2">
                 <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0 mt-0.5" />
-                <span>+91 98765 43210 (WhatsApp)</span>
+                <a href={`https://wa.me/${cleanPhone}`} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  {phone} (WhatsApp)
+                </a>
               </li>
               <li className="flex items-start space-x-2">
                 <Mail className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
-                <span>export@kalpanaglobaleximm.com</span>
+                <a href={`mailto:${email}`} className="hover:underline">
+                  {email}
+                </a>
               </li>
               <li className="flex items-start space-x-2">
                 <Globe className="w-4 h-4 text-[#0F3B2E] shrink-0 mt-0.5" />
@@ -108,21 +118,25 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Payment Badges */}
+        {/* Bottom Bar: Copyright & Admin Portal Link */}
         <div className="border-t border-[#E8DFC9] pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-stone-500 gap-4">
           <p>
             &copy; {new Date().getFullYear()} RAASVEN. A Registered Brand by Kalpana Global Eximm. All Rights Reserved.
           </p>
 
           <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => setIsAdminOpen(true)}
+              className="text-[#0F3B2E] font-bold hover:text-[#C5A059] flex items-center space-x-1 transition"
+            >
+              <Lock className="w-3 h-3 text-[#C5A059]" />
+              <span>{isAdminLoggedIn ? 'Admin Panel (Active)' : 'Admin Portal'}</span>
+            </button>
+            <span>•</span>
             <span className="flex items-center space-x-1 text-emerald-800 font-semibold">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>SSL Secured Checkout</span>
             </span>
-            <span>•</span>
-            <a href="#" className="hover:text-stone-800">Privacy Policy</a>
-            <span>•</span>
-            <a href="#" className="hover:text-stone-800">Terms of Export</a>
           </div>
         </div>
 

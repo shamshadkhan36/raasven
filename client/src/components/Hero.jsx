@@ -3,7 +3,8 @@ import { Sparkles, ArrowRight, ShieldCheck, Clock, Award, Droplets } from 'lucid
 import { useCart } from '../context/CartContext';
 
 export const Hero = ({ onExploreClick }) => {
-  const { addToCart, initialProducts } = useCart();
+  const { siteSettings } = useCart();
+  const phone = (siteSettings?.supportPhone || '919876543210').replace(/[^0-9]/g, '');
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#FAF7F0] via-[#F6F2E7] to-[#FAF9F5] border-b border-[#EBE3D0] py-12 md:py-20">
@@ -26,13 +27,12 @@ export const Hero = ({ onExploreClick }) => {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#0F3B2E] leading-[1.12] mb-5 tracking-tight">
-              The Signature of <br className="hidden sm:inline" />
-              <span className="italic font-normal text-[#8A6A2E]">Your Presence.</span>
+              {siteSettings?.heroTitle || 'The Signature of Your Presence.'}
             </h1>
 
             {/* Sub-headline */}
             <p className="text-stone-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed mb-8">
-              Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.
+              {siteSettings?.heroSubtitle || 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'}
             </p>
 
             {/* CTAs */}
@@ -55,7 +55,7 @@ export const Hero = ({ onExploreClick }) => {
               </a>
 
               <a
-                href="https://wa.me/919876543210?text=Hello%20Raasven,%20I'm%20interested%20in%20ordering%20perfumes."
+                href={`https://wa.me/${phone}?text=Hello%20Raasven,%20I'm%20interested%20in%20ordering%20perfumes.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-full bg-[#EBF5EF] hover:bg-[#DEF0E4] text-[#125A41] text-sm font-semibold border border-[#BDE2CC] transition shadow-sm"
@@ -136,17 +136,6 @@ export const Hero = ({ onExploreClick }) => {
                 <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md border border-[#C5A059]/50 px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1.5 text-xs font-bold text-[#0F3B2E]">
                   <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
                   <span>Extraits De Parfum</span>
-                </div>
-
-                {/* Floating Feature Card - Bottom Left */}
-                <div className="absolute -bottom-2 -left-2 bg-white/95 backdrop-blur-md border border-[#E8DFC9] p-3 rounded-xl shadow-xl hidden sm:flex items-center space-x-3 max-w-[210px]">
-                  <div className="w-9 h-9 rounded-full bg-[#EBF3EE] text-[#0F3B2E] flex items-center justify-center font-bold text-sm shrink-0">
-                    ⭐ 4.9
-                  </div>
-                  <div>
-                    <h5 className="text-[11px] font-bold text-[#0F3B2E] leading-tight">Over 1,200+ Bottles</h5>
-                    <p className="text-[10px] text-stone-500">Shipped to Connoisseurs</p>
-                  </div>
                 </div>
 
               </div>

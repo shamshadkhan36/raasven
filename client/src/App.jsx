@@ -5,7 +5,6 @@ import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { ProductCatalog } from './components/ProductCatalog';
 import { B2BSection } from './components/B2BSection';
-import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
@@ -13,6 +12,7 @@ import { QuickViewModal } from './components/QuickViewModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { Toast } from './components/Toast';
+import { AdminDashboard } from './components/AdminDashboard';
 import { MessageCircle } from 'lucide-react';
 
 function RaasvenStore() {
@@ -51,9 +51,6 @@ function RaasvenStore() {
         {/* B2B Private Label & Global Export */}
         <B2BSection />
 
-        {/* Verified Connoisseur Reviews */}
-        <Testimonials />
-
         {/* VIP Circle Newsletter Subscription */}
         <Newsletter />
       </main>
@@ -66,6 +63,7 @@ function RaasvenStore() {
       <QuickViewModal />
       <CheckoutModal />
       <WishlistDrawer />
+      <AdminDashboard />
       <Toast />
 
       {/* Floating Concierge WhatsApp Widget (Bottom Left) */}

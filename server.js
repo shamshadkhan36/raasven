@@ -207,36 +207,14 @@ const coupons = {
   'FREESHIP': { freeShipping: true, minSpend: 0, description: 'Complimentary Express Worldwide Shipping' }
 };
 
-// Testimonials Data
-const testimonials = [
-  {
-    id: 1,
-    name: 'Tariq Al-Mansoor',
-    role: 'Fragrance Collector',
-    location: 'Dubai, UAE 🇦🇪',
-    rating: 5,
-    perfume: 'Oud Royale (Extrait)',
-    comment: 'The Cambodian Oud in Oud Royale is on par with niche houses costing 5 times as much. Sillage lasted past 16 hours during a Dubai evening. Exceptional craftsmanship.'
-  },
-  {
-    id: 2,
-    name: 'Ananya Sharma',
-    role: 'Fashion Consultant',
-    location: 'Mumbai, India 🇮🇳',
-    rating: 5,
-    perfume: 'Élan & Ruby Mist',
-    comment: 'Élan has become my undisputed signature scent. The bourbon vanilla and jasmine blend seamlessly without being overly sweet. The gold and emerald packaging is pure luxury.'
-  },
-  {
-    id: 3,
-    name: 'Alexander Van Dijk',
-    role: 'Luxury Retail Buyer',
-    location: 'Amsterdam, Netherlands 🇳🇱',
-    rating: 5,
-    perfume: 'Wild Edge (100ml)',
-    comment: 'Imported a trial batch of Wild Edge for our boutique. Sold out within two weeks. The juniper and vetiver combination is crisp, clean, and unmistakably premium.'
-  }
-];
+// Dynamic Site Settings
+let siteSettings = {
+  announcementText: 'Complimentary 10ml Discovery Sample on orders over ₹1,999 • Code: RAASVEN10',
+  supportPhone: '+91 98765 43210',
+  supportEmail: 'export@kalpanaglobaleximm.com',
+  heroTitle: 'The Signature of Your Presence.',
+  heroSubtitle: 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'
+};
 
 // API Routes
 app.get('/api/products', (req, res) => {
@@ -431,9 +409,79 @@ app.post('/api/newsletter', (req, res) => {
   });
 });
 
-// Testimonials
-app.get('/api/testimonials', (req, res) => {
-  res.json({ success: true, testimonials });
+// Admin Settings
+app.get('/api/admin/settings', (req, res) => {
+  res.json({ success: true, settings: siteSettings });
+});
+
+app.put('/api/admin/settings', (req, res) => {
+  siteSettings = { ...siteSettings, ...req.body };
+  res.json({ success: true, message: 'Settings updated successfully', settings: siteSettings });
+});
+
+// Admin Orders
+app.get('/api/admin/orders', (req, res) => {
+  res.json({ success: true, count: orders.length, orders });
+});
+
+app.patch('/api/admin/orders/:id', (req, res) => {
+  const order = orders.find(o => o.orderId === req.params.id);
+  if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+  if (req.body.status) order.status = req.body.status;
+  res.json({ success: true, order });
+});
+
+// Admin Inquiries
+app.get('/api/admin/inquiries', (req, res) => {
+  res.json({ success: true, count: inquiries.length, inquiries });
+});
+
+// Admin Coupons
+app.get('/api/admin/coupons', (req, res) => {
+  res.json({ success: true, coupons });
+});
+
+app.post('/api/admin/coupons', (req, res) => {
+  const { code, discountPercent, discountFlat, minSpend, description } = req.body;
+  if (!code) return res.status(400).json({ success: false, message: 'Coupon code required' });
+  const cleanCode = code.trim().toUpperCase();
+  coupons[cleanCode] = {
+    discountPercent: Number(discountPercent) || 0,
+    discountFlat: Number(discountFlat) || 0,
+    minSpend: Number(minSpend) || 0,
+    description: description || `${discountPercent || discountFlat}% off discount`
+  };
+  res.json({ success: true, message: `Coupon ${cleanCode} created`, coupons });
+});
+
+app.delete('/api/admin/coupons/:code', (req, res) => {
+  const code = req.params.code.trim().toUpperCase();
+  delete coupons[code];
+  res.json({ success: true, message: `Coupon ${code} removed`, coupons });
+});
+
+// Admin Products CRUD
+app.post('/api/admin/products', (req, res) => {
+  const newProduct = {
+    ...req.body,
+    id: req.body.id || req.body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(100 + Math.random() * 900)
+  };
+  products.unshift(newProduct);
+  res.status(201).json({ success: true, message: 'Product created', product: newProduct, products });
+});
+
+app.put('/api/admin/products/:id', (req, res) => {
+  const idx = products.findIndex(p => p.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Product not found' });
+  products[idx] = { ...products[idx], ...req.body };
+  res.json({ success: true, message: 'Product updated', product: products[idx], products });
+});
+
+app.delete('/api/admin/products/:id', (req, res) => {
+  const idx = products.findIndex(p => p.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Product not found' });
+  const deleted = products.splice(idx, 1)[0];
+  res.json({ success: true, message: 'Product deleted', deleted, products });
 });
 
 // Currency Conversion Rates

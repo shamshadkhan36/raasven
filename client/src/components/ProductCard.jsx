@@ -84,11 +84,9 @@ export const ProductCard = ({ product }) => {
           {/* Subtitle / Family */}
           <div className="flex items-center justify-between text-xs text-[#8C6B28] mb-1 font-semibold tracking-wider uppercase">
             <span>{product.category}</span>
-            <div className="flex items-center space-x-1 text-stone-700 font-bold">
-              <Star className="w-3 h-3 text-[#D4AF37] fill-[#D4AF37]" />
-              <span className="text-[11px]">{product.rating}</span>
-              <span className="text-[10px] text-stone-400 font-normal">({product.reviewCount})</span>
-            </div>
+            <span className="text-[10px] font-bold text-[#0F3B2E] bg-[#EBF3EE] px-2 py-0.5 rounded-full border border-[#C5A059]/30">
+              {product.concentration || 'Pure Extrait'}
+            </span>
           </div>
 
           {/* Product Name */}
