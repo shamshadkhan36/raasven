@@ -1,1 +1,11 @@
 /vendor
+composer.json
+composer.lock
+artisan
+/app
+/bootstrap
+/config
+/database
+/routes
+/storage
+/tests
