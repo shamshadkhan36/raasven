@@ -49,8 +49,11 @@ export const B2BSection = () => {
             <span className="text-xs font-bold uppercase tracking-widest text-[#8C6B28] bg-white px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 shadow-sm inline-block mb-3">
               ⚜️ Kalpana Global Eximm B2B Solutions
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0F3B2E] mb-4">
-              Export & Private Label Parfumerie
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4">
+              <span className="text-[#0F3B2E]">Export & </span>
+              <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#8A6214] bg-clip-text text-transparent">
+                Private Label Parfumerie
+              </span>
             </h2>
             <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
               We empower luxury brands, boutique houses, and international distributors with turnkey fragrance manufacturing, regulatory compliance, and worldwide freight logistics.

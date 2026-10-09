@@ -6,6 +6,37 @@ export const Hero = ({ onExploreClick }) => {
   const { siteSettings } = useCart();
   const phone = (siteSettings?.supportPhone || '919876543210').replace(/[^0-9]/g, '');
 
+  const renderHeroTitle = (title) => {
+    const raw = title || 'The Signature of Your Presence.';
+    if (raw.toLowerCase().includes('signature of your presence')) {
+      return (
+        <>
+          <span className="text-[#0F3B2E]">The Signature of </span>
+          <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#996515] bg-clip-text text-transparent font-bold">
+            Your Presence.
+          </span>
+        </>
+      );
+    }
+    const words = raw.split(' ');
+    if (words.length > 2) {
+      const mid = Math.ceil(words.length / 2);
+      return (
+        <>
+          <span className="text-[#0F3B2E]">{words.slice(0, mid).join(' ')} </span>
+          <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#996515] bg-clip-text text-transparent font-bold">
+            {words.slice(mid).join(' ')}
+          </span>
+        </>
+      );
+    }
+    return (
+      <span className="bg-gradient-to-r from-[#0F3B2E] via-[#1A5C47] to-[#C5A059] bg-clip-text text-transparent font-bold">
+        {raw}
+      </span>
+    );
+  };
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#FAF7F0] via-[#F6F2E7] to-[#FAF9F5] border-b border-[#EBE3D0] py-12 md:py-20">
       {/* Decorative subtle ambient luxury glows */}
@@ -25,10 +56,17 @@ export const Hero = ({ onExploreClick }) => {
               <span className="text-[#87662B] font-medium">Kalpana Global Eximm</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#0F3B2E] leading-[1.12] mb-5 tracking-tight">
-              {siteSettings?.heroTitle || 'The Signature of Your Presence.'}
+            {/* Main Headline (Green & Golden) */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif leading-[1.14] mb-4 tracking-tight">
+              {renderHeroTitle(siteSettings?.heroTitle)}
             </h1>
+
+            {/* Green & Golden Luxury Divider */}
+            <div className="flex items-center space-x-2 mb-6">
+              <span className="h-0.5 w-14 bg-[#0F3B2E] rounded-full"></span>
+              <span className="text-xs text-[#C5A059]">⚜️</span>
+              <span className="h-0.5 w-14 bg-gradient-to-r from-[#C5A059] to-[#E5C158] rounded-full"></span>
+            </div>
 
             {/* Sub-headline */}
             <p className="text-stone-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed mb-8">

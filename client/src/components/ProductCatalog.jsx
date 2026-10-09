@@ -64,8 +64,11 @@ export const ProductCatalog = ({ searchInputRef }) => {
             <span className="w-8 h-px bg-[#C5A059]"></span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#0F3B2E] font-bold mb-4">
-            Curated Artisanal Fragrances
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4">
+            <span className="text-[#0F3B2E]">Curated </span>
+            <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#8A6214] bg-clip-text text-transparent">
+              Artisanal Fragrances
+            </span>
           </h2>
 
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
