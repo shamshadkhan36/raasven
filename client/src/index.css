@@ -15,10 +15,25 @@
     --bg-page: #FAF9F5;
   }
 
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
+
   body {
     background-color: var(--bg-page);
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     color: #2D3748;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   h1, h2, h3, h4, .font-serif {

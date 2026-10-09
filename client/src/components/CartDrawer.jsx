@@ -20,8 +20,12 @@ export const CartDrawer = () => {
     removeCoupon,
     progressToFreeShipping,
     amountNeededForFreeShipping,
-    setIsCheckoutOpen
+    setIsCheckoutOpen,
+    siteSettings
   } = useCart();
+
+  const phone = siteSettings?.supportPhone || '+91 98765 43210';
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
 
   const [couponInput, setCouponInput] = useState('');
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
@@ -44,8 +48,8 @@ export const CartDrawer = () => {
 
   const handleWhatsAppOrder = () => {
     const itemsList = cart.map(i => `• ${i.name} (${i.size}) x${i.quantity} = ₹${i.price * i.quantity}`).join('%0A');
-    const msg = `Hello Raasven,%0A%0AI would like to place an order:%0A${itemsList}%0A%0A*Total: ₹${finalTotal}*%0A%0APlease assist me with dispatch and payment.`;
-    window.open(`https://wa.me/919876543210?text=${msg}`, '_blank');
+    const msg = `Hello Raasven,%0A%0AI would like to place an order:%0A${itemsList}%0A%0A*Total: ₹${finalTotal}*%0A%0APlease assist me with dispatch.`;
+    window.open(`https://wa.me/${cleanPhone || '919876543210'}?text=${msg}`, '_blank');
   };
 
   return (
@@ -261,7 +265,8 @@ export const CartDrawer = () => {
                   onClick={handleProceedToCheckout}
                   className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#0F3B2E] via-[#14503E] to-[#0F3B2E] hover:from-[#134939] hover:to-[#1b614c] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#0F3B2E]/20 flex items-center justify-center space-x-2 transition"
                 >
-                  <span>Proceed to Secure Checkout</span>
+                  <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
+                  <span>Proceed to WhatsApp Checkout</span>
                   <ArrowRight className="w-4 h-4 text-[#E6CA65]" />
                 </button>
 
@@ -269,15 +274,14 @@ export const CartDrawer = () => {
                   onClick={handleWhatsAppOrder}
                   className="w-full py-2.5 rounded-full bg-[#EBF5EF] hover:bg-[#DEF0E4] text-[#125A41] font-semibold text-xs border border-[#BDE2CC] flex items-center justify-center space-x-2 transition"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
-                  <span>Order via WhatsApp Direct</span>
+                  <span>Quick WhatsApp Enquiry</span>
                 </button>
               </div>
 
               {/* Trust Tag */}
               <div className="flex items-center justify-center space-x-2 text-[10px] text-stone-400">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                <span>256-Bit SSL Encrypted Checkout • 100% Authentic Guaranteed</span>
+                <span>Direct WhatsApp Concierge • 100% Authentic Guaranteed</span>
               </div>
 
             </div>

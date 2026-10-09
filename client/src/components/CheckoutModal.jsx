@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { X, ShieldCheck, CheckCircle2, Truck, CreditCard, Smartphone, PackageCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { X, ShieldCheck, CheckCircle2, Truck, MessageCircle, PackageCheck, ArrowRight, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const CheckoutModal = () => {
@@ -14,8 +14,12 @@ export const CheckoutModal = () => {
     finalTotal,
     formatPrice,
     coupon,
-    clearCart
+    clearCart,
+    siteSettings
   } = useCart();
+
+  const phone = siteSettings?.supportPhone || '+91 98765 43210';
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
 
   const [customer, setCustomer] = useState({
     fullName: '',
@@ -28,7 +32,6 @@ export const CheckoutModal = () => {
     country: 'India'
   });
 
-  const [paymentMethod, setPaymentMethod] = useState('UPI / QR Instant Pay');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
   const [formError, setFormError] = useState('');
@@ -44,11 +47,43 @@ export const CheckoutModal = () => {
     e.preventDefault();
 
     if (!customer.fullName || !customer.phone || !customer.address || !customer.city) {
-      setFormError('Please complete all required shipping fields.');
+      setFormError('Please enter your full name, phone/WhatsApp number, address, and city.');
       return;
     }
 
     setIsSubmitting(true);
+
+    const generatedOrderId = `RSV-${Date.now().toString().slice(-6)}`;
+    const itemsText = cart.map(item => `• ${item.name} (${item.size}) x${item.quantity} = ${formatPrice(item.price * item.quantity)}`).join('\n');
+    
+    const whatsappMessage = 
+`⚜️ *RAASVEN HAUTE PARFUMERIE - ORDER #${generatedOrderId}* ⚜️\n\n` +
+`👤 *Customer:* ${customer.fullName}\n` +
+`📞 *Phone:* ${customer.phone}\n` +
+(customer.email ? `✉️ *Email:* ${customer.email}\n` : '') +
+`📍 *Delivery Address:*\n${customer.address}, ${customer.city}${customer.pincode ? ` - ${customer.pincode}` : ''}, ${customer.country}\n\n` +
+`🛍️ *Ordered Fragrances:*\n${itemsText}\n\n` +
+`💳 *Order Dossier:*\n` +
+`• Subtotal: ${formatPrice(subtotal)}\n` +
+(discount > 0 ? `• Discount (${coupon?.code || 'PROMO'}): -${formatPrice(discount)}\n` : '') +
+`• Shipping: ${shippingFee === 0 ? 'FREE' : formatPrice(shippingFee)}\n` +
+`*TOTAL AMOUNT: ${formatPrice(finalTotal)}*\n\n` +
+`✨ Please confirm my order formulation and delivery schedule!`;
+
+    const targetPhone = cleanPhone || '919876543210';
+    const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    let orderData = {
+      orderId: generatedOrderId,
+      createdAt: new Date().toISOString(),
+      customer,
+      items: [...cart],
+      pricing: { subtotal, discount, shippingFee, total: finalTotal },
+      paymentMethod: 'WhatsApp Concierge Confirmation',
+      trackingNumber: `TRK-${Math.floor(10000000 + Math.random() * 90000000)}`,
+      estimatedDelivery: '3 - 5 Business Days',
+      whatsappUrl: waUrl
+    };
 
     try {
       const response = await fetch('/api/orders', {
@@ -57,46 +92,34 @@ export const CheckoutModal = () => {
         body: JSON.stringify({
           customer,
           items: cart,
-          paymentMethod,
+          paymentMethod: 'WhatsApp Concierge Confirmation',
           couponCode: coupon?.code,
+          whatsappUrl: waUrl
         })
       });
 
       const data = await response.json();
-      if (data.success) {
-        setConfirmedOrder(data.order);
-        clearCart();
-        // Trigger celebratory confetti
-        try {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-        } catch {}
-      } else {
-        setFormError(data.message || 'Could not place order. Please try again.');
+      if (data.success && data.order) {
+        orderData = { ...data.order, whatsappUrl: waUrl, estimatedDelivery: '3 - 5 Business Days' };
       }
     } catch {
-      // Local simulated order if API is offline
-      const mockOrder = {
-        orderId: `RSV-${Date.now().toString().slice(-6)}`,
-        createdAt: new Date().toISOString(),
-        customer,
-        items: [...cart],
-        pricing: { subtotal, discount, shippingFee, total: finalTotal },
-        paymentMethod,
-        trackingNumber: `TRK-${Math.floor(10000000 + Math.random() * 90000000)}`,
-        estimatedDelivery: '3 - 5 Business Days'
-      };
-      setConfirmedOrder(mockOrder);
-      clearCart();
-      try {
-        confetti({ particleCount: 90, spread: 60 });
-      } catch {}
-    } finally {
-      setIsSubmitting(false);
+      // Local order record retained if offline
     }
+
+    setConfirmedOrder(orderData);
+    clearCart();
+
+    try {
+      confetti({
+        particleCount: 110,
+        spread: 75,
+        origin: { y: 0.6 }
+      });
+    } catch {}
+
+    // Launch WhatsApp directly
+    window.open(waUrl, '_blank');
+    setIsSubmitting(false);
   };
 
   return (
@@ -162,11 +185,14 @@ export const CheckoutModal = () => {
                 </div>
                 <div className="flex justify-between pb-2 border-b border-[#F0EAE0]">
                   <span className="text-stone-500">Estimated Delivery:</span>
-                  <span className="font-bold text-[#0F3B2E]">{confirmedOrder.estimatedDelivery}</span>
+                  <span className="font-bold text-[#0F3B2E]">{confirmedOrder.estimatedDelivery || '3 - 5 Business Days'}</span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-[#F0EAE0]">
-                  <span className="text-stone-500">Payment Option:</span>
-                  <span className="font-semibold text-stone-800">{confirmedOrder.paymentMethod}</span>
+                  <span className="text-stone-500">Ordering Mode:</span>
+                  <span className="font-semibold text-emerald-800 flex items-center space-x-1">
+                    <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
+                    <span>WhatsApp Concierge ({phone})</span>
+                  </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-[#F0EAE0]">
                   <span className="text-stone-500">Shipping To:</span>
@@ -175,19 +201,20 @@ export const CheckoutModal = () => {
                   </span>
                 </div>
                 <div className="flex justify-between pt-1 text-sm font-bold text-[#0F3B2E]">
-                  <span>Total Paid / Payable:</span>
+                  <span>Total Amount:</span>
                   <span className="font-serif text-base">{formatPrice(confirmedOrder.pricing.total)}</span>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href={`https://wa.me/919876543210?text=Hello%20Raasven,%20I%20just%20placed%20order%20%23${confirmedOrder.orderId}.%20Please%20confirm%20dispatch.`}
+                  href={confirmedOrder.whatsappUrl || `https://wa.me/${cleanPhone || '919876543210'}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-3 px-4 rounded-full bg-[#EBF5EF] hover:bg-[#DEF0E4] text-[#125A41] text-xs font-bold border border-[#BDE2CC] transition text-center"
+                  className="flex-1 py-3.5 px-4 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold shadow-md shadow-[#25D366]/20 transition text-center flex items-center justify-center space-x-2"
                 >
-                  Confirm on WhatsApp
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>Open WhatsApp Order</span>
                 </a>
 
                 <button
@@ -195,7 +222,7 @@ export const CheckoutModal = () => {
                     setIsCheckoutOpen(false);
                     setConfirmedOrder(null);
                   }}
-                  className="flex-1 py-3 px-4 rounded-full bg-[#0F3B2E] text-white text-xs font-bold hover:bg-[#144d3c] transition"
+                  className="flex-1 py-3.5 px-4 rounded-full bg-[#0F3B2E] text-white text-xs font-bold hover:bg-[#144d3c] transition"
                 >
                   Continue Shopping
                 </button>
@@ -236,7 +263,7 @@ export const CheckoutModal = () => {
                     </div>
 
                     <div>
-                      <label className="block text-stone-600 mb-1 font-semibold">Email Address *</label>
+                      <label className="block text-stone-600 mb-1 font-semibold">Email Address (Optional)</label>
                       <input
                         type="email"
                         name="email"
@@ -244,12 +271,11 @@ export const CheckoutModal = () => {
                         onChange={handleInputChange}
                         placeholder="alex@domain.com"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E2D8C3] focus:outline-none focus:border-[#C5A059]"
-                        required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-stone-600 mb-1 font-semibold">Phone / WhatsApp *</label>
+                      <label className="block text-stone-600 mb-1 font-semibold">Phone / WhatsApp Number *</label>
                       <input
                         type="tel"
                         name="phone"
@@ -320,43 +346,43 @@ export const CheckoutModal = () => {
                   </div>
                 </div>
 
-                {/* Payment Selection */}
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-[#0F3B2E] mb-3 flex items-center space-x-1.5">
-                    <CreditCard className="w-4 h-4 text-[#C5A059]" />
-                    <span>Payment Method</span>
-                  </h4>
+                {/* Direct WhatsApp Concierge Notice (Zero online gateway) */}
+                <div className="bg-[#FAF7F0] border-2 border-[#C5A059]/40 rounded-2xl p-4 sm:p-5">
+                  <div className="flex items-center space-x-2.5 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-[#EBF5EF] flex items-center justify-center border border-[#25D366]/40 text-[#25D366]">
+                      <MessageCircle className="w-4 h-4 fill-[#25D366]" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#0F3B2E]">
+                        Direct WhatsApp Order & Concierge
+                      </h4>
+                      <p className="text-[11px] text-[#8C6B28] font-medium">
+                        Zero Online Gateway Hassle • Personalized Dispatch Confirmation
+                      </p>
+                    </div>
+                  </div>
 
-                  <div className="space-y-2 text-xs">
-                    {[
-                      { id: 'UPI / QR Instant Pay', label: 'UPI / Google Pay / PhonePe / Paytm', desc: 'Instant QR code scan & zero extra fees' },
-                      { id: 'Credit or Debit Card', label: 'Visa, MasterCard, Amex (Secure Gateway)', desc: '256-bit encrypted card transaction' },
-                      { id: 'Cash on Delivery (COD)', label: 'Cash on Delivery (COD)', desc: 'Pay upon delivery at your doorstep' },
-                      { id: 'Bank Wire / Export LC', label: 'International Bank Wire / B2B Export', desc: 'For bulk buyers & overseas orders' }
-                    ].map(option => (
-                      <label
-                        key={option.id}
-                        className={`p-3.5 rounded-xl border flex items-center justify-between cursor-pointer transition ${
-                          paymentMethod === option.id
-                            ? 'bg-[#FAF7F0] border-[#C5A059] shadow-sm'
-                            : 'bg-white border-[#E8DFC9] hover:bg-[#FAF8F5]'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <input
-                            type="radio"
-                            name="paymentMethod"
-                            checked={paymentMethod === option.id}
-                            onChange={() => setPaymentMethod(option.id)}
-                            className="text-[#0F3B2E] focus:ring-[#C5A059]"
-                          />
-                          <div>
-                            <span className="font-bold text-[#0F3B2E] block">{option.label}</span>
-                            <span className="text-stone-500 text-[11px]">{option.desc}</span>
-                          </div>
-                        </div>
-                      </label>
-                    ))}
+                  <p className="text-xs text-stone-600 leading-relaxed mt-2 mb-3">
+                    We process all orders directly via WhatsApp concierge to give you bespoke service. When you click below, your order dossier will be generated and you will be connected directly with our fragrance concierge on WhatsApp (<strong>{phone}</strong>) to confirm your bottles and delivery.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-stone-700 font-medium pt-2 border-t border-[#E8DFC9]">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[#25D366] font-bold">✓</span>
+                      <span>Direct verification with perfumer</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[#25D366] font-bold">✓</span>
+                      <span>Real-time dispatch tracking on WhatsApp</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[#25D366] font-bold">✓</span>
+                      <span>Convenient UPI / settlement on chat</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[#25D366] font-bold">✓</span>
+                      <span>Complimentary discovery vials included</span>
+                    </div>
                   </div>
                 </div>
 
@@ -418,15 +444,16 @@ export const CheckoutModal = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting || cart.length === 0}
-                    className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-[#0F3B2E] via-[#14503E] to-[#0F3B2E] hover:from-[#134939] hover:to-[#1b614c] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#0F3B2E]/20 flex items-center justify-center space-x-2 transition disabled:opacity-50"
+                    className="w-full py-3.5 px-4 rounded-full bg-[#0F3B2E] hover:bg-[#144d3c] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#0F3B2E]/20 flex items-center justify-center space-x-2 transition disabled:opacity-50"
                   >
-                    <span>{isSubmitting ? 'Securing Your Order...' : `Place Order • ${formatPrice(finalTotal)}`}</span>
+                    <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
+                    <span>{isSubmitting ? 'Opening WhatsApp...' : `Confirm & Order on WhatsApp • ${formatPrice(finalTotal)}`}</span>
                     <ArrowRight className="w-4 h-4 text-[#E6CA65]" />
                   </button>
 
                   <div className="mt-3 flex items-center justify-center space-x-2 text-[10px] text-stone-500">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                    <span>Protected by 256-bit SSL encryption</span>
+                    <span>Direct Concierge Service • Official Raasven Parfumerie</span>
                   </div>
                 </div>
 
