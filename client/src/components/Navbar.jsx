@@ -72,8 +72,8 @@ export const Navbar = ({ onSearchClick }) => {
               <span className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold tracking-[0.18em] sm:tracking-[0.22em] text-[#0F3B2E] group-hover:text-[#185342] transition block leading-tight">
                 RAASVEN
               </span>
-              <span className="block text-[8px] sm:text-[9px] uppercase tracking-[0.24em] text-[#8C6B28] font-medium -mt-0.5">
-                Haute Parfumerie
+              <span className="block text-[8px] sm:text-[9px] uppercase tracking-[0.22em] text-[#8C6B28] font-medium -mt-0.5">
+                The Essence of Elegance
               </span>
             </div>
           </a>
@@ -94,7 +94,7 @@ export const Navbar = ({ onSearchClick }) => {
             Global Export
           </a>
           <a href="#about" className="hover:text-[#0F3B2E] hover:border-b-2 hover:border-[#C5A059] pb-0.5 transition">
-            About Us
+            Brand Story
           </a>
         </nav>
 
@@ -207,7 +207,7 @@ export const Navbar = ({ onSearchClick }) => {
               onClick={() => setMobileMenuOpen(false)}
               className="py-1 hover:text-[#0F3B2E]"
             >
-              About Kalpana Global Eximm
+              Brand Story & Philosophy
             </a>
             <button 
               onClick={() => {

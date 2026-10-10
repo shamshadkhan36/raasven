@@ -24,13 +24,13 @@ export const Footer = () => {
                   RAASVEN
                 </span>
                 <span className="block text-[9px] uppercase tracking-[0.25em] text-[#8C6B28] font-semibold -mt-1">
-                  Haute Parfumerie
+                  The Essence of Elegance
                 </span>
               </div>
             </div>
 
             <p className="text-stone-600 text-xs leading-relaxed max-w-sm">
-              A luxury fragrance house by <strong>Kalpana Global Eximm</strong>. Dedicated to formulating master-grade Extraits de Parfum that unite Indian botanical heritage with French distillation artistry.
+              Raasven represents the essence of elegance — where Indian sensibility meets modern luxury. A prestigious fragrance house by <strong>Kalpana Global Eximm</strong> formulating master-grade Extraits de Parfum.
             </p>
 
             <div className="pt-2 flex items-center space-x-3 text-stone-500">

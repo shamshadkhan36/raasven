@@ -51,9 +51,9 @@ export const Hero = ({ onExploreClick }) => {
             {/* Top Prestige Pill Badge */}
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#EBF3EE] to-[#FAF4E6] border border-[#C5A059]/40 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#0F3B2E] w-fit mb-5 shadow-sm">
               <span className="text-[#C5A059]">⚜️</span>
-              <span className="tracking-wider uppercase text-[11px] font-bold">Haute Parfumerie • Pure Extraits</span>
+              <span className="tracking-wider uppercase text-[11px] font-bold">The Essence of Elegance</span>
               <span className="w-1 h-1 rounded-full bg-[#0F3B2E]"></span>
-              <span className="text-[#87662B] font-medium">Kalpana Global Eximm</span>
+              <span className="text-[#87662B] font-medium">Indian Sensibility • Modern Luxury</span>
             </div>
 
             {/* Main Headline (Green & Golden) */}
@@ -70,7 +70,7 @@ export const Hero = ({ onExploreClick }) => {
 
             {/* Sub-headline */}
             <p className="text-stone-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed mb-8">
-              {siteSettings?.heroSubtitle || 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'}
+              {siteSettings?.heroSubtitle || 'Raasven represents the essence of elegance — where Indian sensibility meets modern luxury. Artisanal Extraits de Parfum crafted with 25% French perfume oils.'}
             </p>
 
             {/* CTAs */}

@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
         supportPhone: '+91 98765 43210',
         supportEmail: 'export@kalpanaglobaleximm.com',
         heroTitle: 'The Signature of Your Presence.',
-        heroSubtitle: 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'
+        heroSubtitle: 'Raasven represents the essence of elegance — where Indian sensibility meets modern luxury. Artisanal Extraits de Parfum crafted with 25% French perfume oils.'
       };
     } catch {
       return {
@@ -31,7 +31,7 @@ export const CartProvider = ({ children }) => {
         supportPhone: '+91 98765 43210',
         supportEmail: 'export@kalpanaglobaleximm.com',
         heroTitle: 'The Signature of Your Presence.',
-        heroSubtitle: 'Artisanal fragrances crafted with 25% French perfume oils and aged Oriental notes. Designed to linger for over 14 hours with unforgettable sillage.'
+        heroSubtitle: 'Raasven represents the essence of elegance — where Indian sensibility meets modern luxury. Artisanal Extraits de Parfum crafted with 25% French perfume oils.'
       };
     }
   });

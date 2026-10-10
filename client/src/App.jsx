@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { CartProvider } from './context/CartContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { BrandStory } from './components/BrandStory';
 import { Features } from './components/Features';
 import { ProductCatalog } from './components/ProductCatalog';
 import { B2BSection } from './components/B2BSection';
@@ -41,6 +42,9 @@ function RaasvenStore() {
       <main className="flex-grow">
         {/* Luminous Light Luxury Hero */}
         <Hero onExploreClick={handleExploreClick} />
+
+        {/* Brand Story & Brand Positioning: Indian Sensibility Meets Modern Luxury */}
+        <BrandStory />
 
         {/* Quality Pillars & Craftsmanship */}
         <Features />
