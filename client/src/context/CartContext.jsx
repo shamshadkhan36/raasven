@@ -8,7 +8,16 @@ export const CartProvider = ({ children }) => {
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem('raasven_custom_products');
-      return saved ? JSON.parse(saved) : defaultProducts;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const has100ml = parsed.some(p => p.prices && ('100ml' in p.prices));
+        if (has100ml) {
+          localStorage.setItem('raasven_custom_products', JSON.stringify(defaultProducts));
+          return defaultProducts;
+        }
+        return parsed;
+      }
+      return defaultProducts;
     } catch {
       return defaultProducts;
     }

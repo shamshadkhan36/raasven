@@ -47,8 +47,9 @@ export const AdminDashboard = () => {
     subtitle: '',
     category: 'Fresh & Woody',
     family: 'Woody',
+    price20: '899',
+    price30: '1199',
     price50: '1799',
-    price100: '2499',
     badge: 'NEW LAUNCH',
     concentration: '25% Pure Extrait Oil',
     longevity: '14+ Hours Longevity',
@@ -118,8 +119,9 @@ export const AdminDashboard = () => {
       subtitle: prod.subtitle || '',
       category: prod.category || 'Fresh & Woody',
       family: prod.family || 'Woody',
+      price20: prod.prices['20ml'] || '899',
+      price30: prod.prices['30ml'] || '1199',
       price50: prod.prices['50ml'] || Object.values(prod.prices)[0] || '1799',
-      price100: prod.prices['100ml'] || Object.values(prod.prices)[0] || '2499',
       badge: prod.badge || '',
       concentration: prod.concentration || '25% Pure Extrait Oil',
       longevity: prod.longevity || '14+ Hours Longevity',
@@ -139,8 +141,9 @@ export const AdminDashboard = () => {
       subtitle: 'Eau De Parfum — Pure Extrait',
       category: 'Fresh & Woody',
       family: 'Woody',
+      price20: '899',
+      price30: '1199',
       price50: '1799',
-      price100: '2499',
       badge: 'NEW LAUNCH',
       concentration: '25% Pure Extrait Oil',
       longevity: '14+ Hours Longevity',
@@ -162,12 +165,14 @@ export const AdminDashboard = () => {
       category: productForm.category,
       family: productForm.family,
       prices: {
-        '50ml': Number(productForm.price50),
-        '100ml': Number(productForm.price100)
+        '20ml': Number(productForm.price20 || 899),
+        '30ml': Number(productForm.price30 || 1199),
+        '50ml': Number(productForm.price50 || 1799)
       },
       originalPrices: {
-        '50ml': Math.round(Number(productForm.price50) * 1.3),
-        '100ml': Math.round(Number(productForm.price100) * 1.3)
+        '20ml': Math.round(Number(productForm.price20 || 899) * 1.3),
+        '30ml': Math.round(Number(productForm.price30 || 1199) * 1.3),
+        '50ml': Math.round(Number(productForm.price50 || 1799) * 1.3)
       },
       badge: productForm.badge,
       concentration: productForm.concentration,
@@ -790,7 +795,27 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-2.5">
+                <div>
+                  <label className="block text-stone-600 mb-1 font-semibold">Price 20ml (₹) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={productForm.price20}
+                    onChange={(e) => setProductForm({ ...productForm, price20: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E2D8C3]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-stone-600 mb-1 font-semibold">Price 30ml (₹) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={productForm.price30}
+                    onChange={(e) => setProductForm({ ...productForm, price30: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E2D8C3]"
+                  />
+                </div>
                 <div>
                   <label className="block text-stone-600 mb-1 font-semibold">Price 50ml (₹) *</label>
                   <input
@@ -798,16 +823,6 @@ export const AdminDashboard = () => {
                     required
                     value={productForm.price50}
                     onChange={(e) => setProductForm({ ...productForm, price50: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E2D8C3]"
-                  />
-                </div>
-                <div>
-                  <label className="block text-stone-600 mb-1 font-semibold">Price 100ml (₹) *</label>
-                  <input
-                    type="number"
-                    required
-                    value={productForm.price100}
-                    onChange={(e) => setProductForm({ ...productForm, price100: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl bg-white border border-[#E2D8C3]"
                   />
                 </div>

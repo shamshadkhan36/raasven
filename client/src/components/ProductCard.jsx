@@ -5,9 +5,9 @@ import { useCart } from '../context/CartContext';
 export const ProductCard = ({ product }) => {
   const { addToCart, wishlist, toggleWishlist, formatPrice, setQuickViewProduct, setIsCheckoutOpen } = useCart();
   
-  // Available sizes
+  // Available sizes (20ml, 30ml, 50ml)
   const sizes = Object.keys(product.prices);
-  const [selectedSize, setSelectedSize] = useState(sizes.includes('100ml') ? '100ml' : sizes[0]);
+  const [selectedSize, setSelectedSize] = useState(sizes.includes('50ml') ? '50ml' : sizes[0]);
   const [isAddedAnimation, setIsAddedAnimation] = useState(false);
 
   const isWishlisted = wishlist.includes(product.id);

@@ -12,12 +12,14 @@ export const initialProducts = [
     inStock: true,
     image: '/images/wild-edge.jpg',
     prices: {
-      '50ml': 1799,
-      '100ml': 2499
+      '20ml': 899,
+      '30ml': 1199,
+      '50ml': 1799
     },
     originalPrices: {
-      '50ml': 2299,
-      '100ml': 3299
+      '20ml': 1199,
+      '30ml': 1599,
+      '50ml': 2299
     },
     concentration: '25% Pure Extrait Oil',
     longevity: '14+ Hours Longevity',
@@ -47,12 +49,14 @@ export const initialProducts = [
     inStock: true,
     image: '/images/elan.jpg',
     prices: {
-      '50ml': 1999,
-      '100ml': 2799
+      '20ml': 999,
+      '30ml': 1299,
+      '50ml': 1999
     },
     originalPrices: {
-      '50ml': 2599,
-      '100ml': 3599
+      '20ml': 1299,
+      '30ml': 1699,
+      '50ml': 2599
     },
     concentration: '28% Pure Extrait Oil',
     longevity: '16+ Hours Longevity',
@@ -82,12 +86,14 @@ export const initialProducts = [
     inStock: true,
     image: '/images/ruby-mist.jpg',
     prices: {
-      '50ml': 1899,
-      '100ml': 2599
+      '20ml': 949,
+      '30ml': 1249,
+      '50ml': 1899
     },
     originalPrices: {
-      '50ml': 2399,
-      '100ml': 3499
+      '20ml': 1249,
+      '30ml': 1649,
+      '50ml': 2399
     },
     concentration: '24% Pure Extrait Oil',
     longevity: '12+ Hours Longevity',
@@ -117,12 +123,14 @@ export const initialProducts = [
     inStock: true,
     image: '/images/oud-royale.jpg',
     prices: {
-      '50ml': 2299,
-      '100ml': 3199
+      '20ml': 1199,
+      '30ml': 1499,
+      '50ml': 2299
     },
     originalPrices: {
-      '50ml': 2999,
-      '100ml': 4199
+      '20ml': 1499,
+      '30ml': 1999,
+      '50ml': 2999
     },
     concentration: '30% Master Extrait Oil',
     longevity: '18+ Hours Longevity',

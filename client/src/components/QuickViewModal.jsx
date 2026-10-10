@@ -9,7 +9,7 @@ export const QuickViewModal = () => {
 
   const product = quickViewProduct;
   const sizes = Object.keys(product.prices);
-  const [selectedSize, setSelectedSize] = useState(sizes.includes('100ml') ? '100ml' : sizes[0]);
+  const [selectedSize, setSelectedSize] = useState(sizes.includes('50ml') ? '50ml' : sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
